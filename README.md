@@ -37,8 +37,8 @@ All commands use the prefix **`lariel`** to keep them grouped and easy to find.
 Current features:
 
 - Spawn NPCs directly from Pixelmon preset files
-- Autocomplete for preset names
-- Optional search modes (first, last, random)
+  - Autocomplete for preset names
+  - Optional search modes (first, last, random)
 - List all available presets with optional filtering
 
 ---
