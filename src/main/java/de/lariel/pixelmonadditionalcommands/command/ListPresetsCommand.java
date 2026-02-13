@@ -14,7 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 
 public class ListPresetsCommand {
     public static LiteralArgumentBuilder<CommandSourceStack> registerListPresets() {
-        return Commands.literal("listpresets")
+        return Commands.literal("lariellistpresets")
                 .executes(ctx -> listPresets(ctx, ""))
                 .then(Commands.argument("filter", StringArgumentType.greedyString())
                         .suggests((ctx, builder) -> {

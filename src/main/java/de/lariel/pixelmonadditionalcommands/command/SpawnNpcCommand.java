@@ -30,7 +30,7 @@ public class SpawnNpcCommand {
      * @param dispatcher The dispatcher from the event
      */
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(LiteralArgumentBuilder.<CommandSourceStack>literal("spawnnpc")
+        dispatcher.register(LiteralArgumentBuilder.<CommandSourceStack>literal("larielspawnnpc")
                 .executes(context -> {
                     context.getSource().sendFailure(Component.literal("Invalid command"));
                     return 0;
