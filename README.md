@@ -4,18 +4,29 @@ This repository is for the Pixelmon side mod "Lariel's Additional Commands"
 using Neo Forge 21.1.200 and Pixelmon's 9.3.14+ API.
 
 <!-- TOC -->
-* Pixelmon MDK
-  * [Content](#Content)
-    * [SpawnNpc-Command](#/larielspawnnpc)
-  * [Download](#download)
-  * [FAQ](#faq)
+* Lariel's Additional Commands
+    * [Disclaimer](#Disclaimer)
+    * [Content](#Content)
+      * [Spawn Npc Command](#larielspawnnpc)
+      * [List Presets Command](#lariellistpresets)
+    * [Download](#download)
+    * [FAQ](#faq)
+<!-- TOC -->
+
+## Disclaimer
+This mod is provided “as is” and is used at your own risk.
+I have developed and tested the mod carefully and have not identified any harmful behavior 
+or issues during testing. However, I cannot guarantee that unexpected problems will never occur.
+
+By downloading or using this mod, you acknowledge and agree that the author cannot be held liable 
+for any damages, data loss, or other negative effects that may result from installing or using this mod.
 
 ## Content
 As you can guess from the name of the mod, it adds new Minecraft commands.
 I have added to all my additional commands the prefix "lariel" 
 to make it easier to find all the additional commands.
 
-### /larielspawnnpc [required some filter]
+### larielspawnnpc [required some filter]
 This command spawns the first npc from your npc presets, that matches the filter. 
 This command has autocompletion to make it easier to find the correct preset you're searching for.
 
@@ -42,12 +53,12 @@ Spawns the first npc that is found in a subfolder of your presets, that matches 
 Will print out some error message, because you have to provide at least one key word that could be used as a filter.
 
 
-### /lariellistpresets [optional: some filter]
+### lariellistpresets [optional: some filter]
 Scans the presets folder and lists all available presets. 
 You can also provide some optional filter, to find easier the preset you're searching for.
 
 ## Download
-There is currently no way to download this mod, you sadly have to clone and compile this repo on your own.
+On the right side of this page you can find the releases I have published on GitHub.
 I will upload the mod at times to curse forge and will leave a link here.
 
 ## FAQ
