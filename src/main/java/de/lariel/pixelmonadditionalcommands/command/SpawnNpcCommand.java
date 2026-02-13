@@ -10,11 +10,13 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.apache.logging.log4j.Level;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SpawnNpcCommand {
@@ -33,7 +35,7 @@ public class SpawnNpcCommand {
                                     registry.keySet().forEach(id -> builder.suggest("\"" + id.toString() + "\""));
                                     return builder.buildFuture();
                                 })
-                                // --- OPTIONALER PARAMETER "mode" ---
+                                // Optional parameter: search mode
                                 .then(Commands.argument("mode", StringArgumentType.string())
                                         .suggests((ctx, builder) -> {
                                             builder.suggest("first");
@@ -43,7 +45,7 @@ public class SpawnNpcCommand {
                                         })
                                         .executes(ctx -> execute(ctx, true))
                                 )
-                                // --- FALLBACK OHNE MODE ---
+                                // Fallback without search mode defined -> it takes First
                                 .executes(ctx -> execute(ctx, false))
                         )
         );
@@ -68,9 +70,17 @@ public class SpawnNpcCommand {
         }
 
         // Load registry
-        var registry = ServerLifecycleHooks.getCurrentServer()
-                .registryAccess()
-                .registryOrThrow(PixelmonRegistry.NPC_PRESET_REGISTRY);
+        var registry = Optional.ofNullable(ServerLifecycleHooks.getCurrentServer())
+                .map(MinecraftServer::registryAccess)
+                .map(ra -> ra.registryOrThrow(PixelmonRegistry.NPC_PRESET_REGISTRY))
+                .orElse(null);
+
+        if (registry == null) {
+            var errorMessage = "Didn't found presets.";
+            context.getSource().sendFailure(Component.literal(errorMessage));
+            logger.log(Level.ERROR, errorMessage);
+            return 0;
+        }
 
         // Get all presets that are matching the filter
         var matches = registry.entrySet().stream()
@@ -88,9 +98,9 @@ public class SpawnNpcCommand {
 
         // Select a single preset depending on selection mode.
         var preset = switch (mode) {
-            case "last" -> matches.get(matches.size() - 1);
+            case "last" -> matches.getLast();
             case "random" -> matches.get(ThreadLocalRandom.current().nextInt(matches.size()));
-            default -> matches.get(0); // "first"
+            default -> matches.getFirst(); // "first"
         };
 
         // Spawn NPC
@@ -108,8 +118,12 @@ public class SpawnNpcCommand {
             npc.setCurrentlyEditing(player);
         }
 
+        var npcName = Optional.ofNullable(npc.getCustomName())
+                .map(Component::getString)
+                .orElse("No Custom Name found");
+
         context.getSource().sendSuccess(
-                () -> Component.literal("Spawned: " + npc.getCustomName().getString() + " (" + mode + ")"),
+                () -> Component.literal("Spawned: " + npcName + " (" + mode + ")"),
                 true
         );
 
