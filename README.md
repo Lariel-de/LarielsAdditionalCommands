@@ -93,6 +93,7 @@ You can optionally provide a filter to narrow down the results.
 
 #### **Syntax**
 ```/lariellistpresets [filter]```
+
 #### **Arguments**
 
 | Argument | Required | Description |
@@ -108,6 +109,32 @@ Lists all presets.
 **Example 2**  
 ```/lariellistpresets gym```  
 Lists only presets containing the word `gym`.
+
+---
+
+### /larielsettrainertolevel
+Sets the level of a Pixelmon NPC trainer. The command supports entity selectors and level autocompletion.
+
+#### **Syntax**
+```/lariellistpresets [filter]```
+
+**Arguments**
+
+| Argument | Required | Description                                                                |
+|---------|----------|----------------------------------------------------------------------------|
+| `<target>` | Yes | Any single entity selector (`@e`, UUID). Must be an NPC trainer.           |
+| `<level>` | Yes | A numeric level between 1 and 1000.                                        |
+| `equal` | Alternative | Sets the NPC's level to the highest level in the executor's Pokémon party. |
+
+**Examples**
+
+**Example 1**  
+```/larielsetlevel 085214d4-d952-4b78-afd7-8147436dec57 10```  
+Sets NPC trainer with GUID "085214d4-d952-4b78-afd7-8147436dec57" to level 10.
+
+**Example 2**  
+```/larielsetlevel @e[type=pixelmon:npc,limit=1,sort=nearest] equal```  
+Sets the nearest NPC's level to match the highest level in your party.
 
 ---
 
