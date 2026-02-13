@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 
-public class ListPresetsCommand {
+public class LarielListPresetsCommand {
     public static LiteralArgumentBuilder<CommandSourceStack> registerListPresets() {
         return Commands.literal("lariellistpresets")
                 .executes(ctx -> listPresets(ctx, ""))

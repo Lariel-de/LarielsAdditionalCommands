@@ -44,8 +44,9 @@ public class LarielsAdditionalCommands {
 
     @SubscribeEvent
     public static void onCommandRegister(RegisterCommandsEvent event) {
-        SpawnNpcCommand.register(event.getDispatcher());
-        event.getDispatcher().register(ListPresetsCommand.registerListPresets());
+        LarielSpawnNpcCommand.register(event.getDispatcher());
+        event.getDispatcher().register(LarielListPresetsCommand.registerListPresets());
+        LarielSetTrainerToLevel.register(event.getDispatcher());
     }
 
     @SubscribeEvent

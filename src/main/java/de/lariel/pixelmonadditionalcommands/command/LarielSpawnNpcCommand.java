@@ -6,6 +6,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.pixelmonmod.pixelmon.init.registry.PixelmonRegistry;
 import de.lariel.pixelmonadditionalcommands.LarielsAdditionalCommands;
+import de.lariel.pixelmonadditionalcommands.utility.LarielErrorLog;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -19,7 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class SpawnNpcCommand {
+public class LarielSpawnNpcCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
@@ -53,7 +54,6 @@ public class SpawnNpcCommand {
 
     private static int execute(CommandContext<CommandSourceStack> context, boolean hasMode) {
         var presetSearchString = StringArgumentType.getString(context, "presetSearchString");
-        var logger = LarielsAdditionalCommands.getLogger();
 
         // Get search mode
         var mode = hasMode
@@ -65,8 +65,7 @@ public class SpawnNpcCommand {
         var level = context.getSource().getLevel();
 
         if (executor == null) {
-            context.getSource().sendFailure(Component.literal("This command cannot be executed from console."));
-            return 0;
+            return LarielErrorLog.LogDebug("This command cannot be executed from console.", context);
         }
 
         // Load registry
@@ -76,10 +75,7 @@ public class SpawnNpcCommand {
                 .orElse(null);
 
         if (registry == null) {
-            var errorMessage = "Didn't found presets.";
-            context.getSource().sendFailure(Component.literal(errorMessage));
-            logger.log(Level.ERROR, errorMessage);
-            return 0;
+            return LarielErrorLog.LogError("Didn't found presets.", context);
         }
 
         // Get all presets that are matching the filter
@@ -91,9 +87,7 @@ public class SpawnNpcCommand {
         // Print out error message if no preset was found.
         if (matches.isEmpty()) {
             var errorMessage = "Didn't find a preset that contains \"" + presetSearchString + "\".";
-            context.getSource().sendFailure(Component.literal(errorMessage));
-            logger.log(Level.DEBUG, errorMessage);
-            return 0;
+            return LarielErrorLog.LogDebug(errorMessage, context);
         }
 
         // Select a single preset depending on selection mode.
