@@ -12,6 +12,7 @@ Built for **NeoForge 21.1.200** and **Pixelmon 9.3.14+**.
 - [Commands](#commands)
     - [/larielspawnnpc](#larielspawnnpc)
     - [/lariellistpresets](#lariellistpresets)
+    - [/larielsettrainertolevel](#larielsettrainertolevel)
 - [Download](#download)
 - [FAQ](#faq)
 <!-- TOC END -->
