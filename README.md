@@ -1,73 +1,131 @@
 # Lariel's Additional Commands
 
-This repository is for the Pixelmon side mod "Lariel's Additional Commands"
-using Neo Forge 21.1.200 and Pixelmon's 9.3.14+ API.
+A lightweight Pixelmon side‑mod adding useful commands for server owners, map makers, and single‑player worlds.  
+Built for **NeoForge 21.1.200** and **Pixelmon 9.3.14+**.
+
+---
 
 <!-- TOC -->
-* Lariel's Additional Commands
-    * [Disclaimer](#Disclaimer)
-    * [Content](#Content)
-      * [Spawn Npc Command](#larielspawnnpc)
-      * [List Presets Command](#lariellistpresets)
-    * [Download](#download)
-    * [FAQ](#faq)
-<!-- TOC -->
+## Table of Contents
+- [Disclaimer](#disclaimer)
+- [Features](#features)
+- [Commands](#commands)
+    - [/larielspawnnpc](#larielspawnnpc)
+    - [/lariellistpresets](#lariellistpresets)
+- [Download](#download)
+- [FAQ](#faq)
+<!-- TOC END -->
+
+---
 
 ## Disclaimer
-This mod is provided “as is” and is used at your own risk.
-I have developed and tested the mod carefully and have not identified any harmful behavior 
-or issues during testing. However, I cannot guarantee that unexpected problems will never occur.
 
-By downloading or using this mod, you acknowledge and agree that the author cannot be held liable 
-for any damages, data loss, or other negative effects that may result from installing or using this mod.
+This mod is provided “as is” and is used at your own risk.  
+I have developed and tested the mod carefully and have not identified any harmful behavior or issues during testing.  
+However, I cannot guarantee that unexpected problems will never occur.
 
-## Content
-As you can guess from the name of the mod, it adds new Minecraft commands.
-I have added to all my additional commands the prefix "lariel" 
-to make it easier to find all the additional commands.
+By downloading or using this mod, you acknowledge and agree that the author cannot be held liable for any damages,  
+data loss, or other negative effects that may result from installing or using this mod.
 
-### larielspawnnpc [required some filter]
-This command spawns the first npc from your npc presets, that matches the filter. 
-This command has autocompletion to make it easier to find the correct preset you're searching for.
+---
 
-#### Example1:
-```/larielspawnnpc leader/gym/dragon```
+## Features
 
-Spawns the first npc that is found in a subfolder of your presets, that matches following conditions:
-* the npc is in a subfolder that is in ..leader/gym
-* "dragon" could link to an additional subfolder or a .json file.
-* 
+Lariel’s Additional Commands adds new Minecraft commands focused on Pixelmon.  
+All commands use the prefix **`lariel`** to keep them grouped and easy to find.
 
+Current features:
 
-#### Example2:
-```/larielspawnnpc move_tutor_5```
+- Spawn NPCs directly from Pixelmon preset files
+- Autocomplete for preset names
+- Optional search modes (first, last, random)
+- List all available presets with optional filtering
 
-Spawns the first npc that is found in a subfolder of your presets, that matches following conditions:
-* "move_tutor_5" could link to a subfolder or a .json file.
-  Whatever is found first the command will search there first for a npc preset
+---
 
+## Commands
 
-#### Example3:
-```/larielspawnnpc```
+### /larielspawnnpc
+Spawns an NPC based on your Pixelmon NPC presets.  
+The command supports autocomplete for easier preset discovery.
 
-Will print out some error message, because you have to provide at least one key word that could be used as a filter.
+#### **Syntax**
+```/larielspawnnpc <filter> [mode]```
+#### **Arguments**
 
+| Argument | Required | Description |
+|---------|----------|-------------|
+| `<filter>` | Yes | Case‑insensitive substring used to search preset paths (folders + filenames). |
+| `[mode]` | No | Determines which preset is selected if multiple matches exist. |
 
-### lariellistpresets [optional: some filter]
-Scans the presets folder and lists all available presets. 
-You can also provide some optional filter, to find easier the preset you're searching for.
+#### **Search Modes**
+
+| Mode | Behavior |
+|------|----------|
+| `first` | Selects the first matching preset (default). |
+| `last` | Selects the last matching preset. |
+| `random` | Selects a random matching preset. |
+
+#### **Examples**
+
+**Example 1**  
+```/larielspawnnpc "leader/gym/dragon"```  
+Spawns the first preset whose path contains `leader/gym/dragon`.
+
+**Example 2**  
+```/larielspawnnpc "move_tutor" random```  
+Spawns random preset whose path contains `move_tutor`.
+
+**Example 3**  
+```/larielspawnnpc "custom_shopkeeper" last```  
+Spawns the last preset whose path contains `custom_shopkeeper`.
+
+**Example 4**  
+```/larielspawnnpc```  
+Shows an error because the filter argument is required.
+
+---
+
+### /lariellistpresets
+
+Scans the Pixelmon preset directory and lists all available presets.  
+You can optionally provide a filter to narrow down the results.
+
+#### **Syntax**
+```/lariellistpresets [filter]```
+#### **Arguments**
+
+| Argument | Required | Description |
+|---------|----------|-------------|
+| `<filter>` | No       | Case‑insensitive substring used to search preset paths (folders + filenames). |
+
+#### **Examples**
+
+**Example 1**  
+```/lariellistpresets```  
+Lists all presets.
+
+**Example 2**  
+```/lariellistpresets gym```  
+Lists only presets containing the word `gym`.
+
+---
 
 ## Download
-On the right side of this page you can find the releases I have published on GitHub.
-I will upload the mod at times to curse forge and will leave a link here.
+
+You can find published releases on the right side of this GitHub repository.  
+I will occasionally upload the mod to CurseForge and link it here once available.
+
+---
 
 ## FAQ
-Frequently Asked Questions
 
-### Can I run this mod in single player?
-Yes you can.
+### **Can I run this mod in single player?**
+Yes, absolutely.
 
-### Has this mod to be installed on server and/or client?
-To be honest I don't know exactly, I have tested the mod just in single player. 
-Since this mod just adds commands that are run spawn entities 
-I would say it has to be just installed on server side.
+### **Does this mod need to be installed on the server, the client, or both?**
+This mod has been tested primarily in single‑player.  
+Since it only adds commands that spawn entities, it should be sufficient to install it **server‑side**.  
+Clients do not need the mod unless I add client‑side features in the future.
+
+---
