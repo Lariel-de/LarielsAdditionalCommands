@@ -5,7 +5,6 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.pixelmonmod.pixelmon.init.registry.PixelmonRegistry;
-import de.lariel.pixelmonadditionalcommands.LarielsAdditionalCommands;
 import de.lariel.pixelmonadditionalcommands.utility.LarielErrorLog;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -14,7 +13,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
-import org.apache.logging.log4j.Level;
 
 import java.util.Map;
 import java.util.Optional;
