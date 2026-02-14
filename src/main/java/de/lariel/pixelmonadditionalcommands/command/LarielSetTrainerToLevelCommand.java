@@ -21,7 +21,7 @@ import org.jetbrains.annotations.UnknownNullability;
 
 import java.util.Optional;
 
-public class LarielSetTrainerToLevel {
+public class LarielSetTrainerToLevelCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("larielsetlevel")
                 .then(Commands.argument("target", EntityArgument.entity())
