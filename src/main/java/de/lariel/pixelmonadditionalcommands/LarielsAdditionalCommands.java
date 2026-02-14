@@ -2,6 +2,7 @@ package de.lariel.pixelmonadditionalcommands;
 
 import de.lariel.pixelmonadditionalcommands.command.*;
 import de.lariel.pixelmonadditionalcommands.command.tempfixes.LarielPokeBattleCommand;
+import de.lariel.pixelmonadditionalcommands.command.tempfixes.LarielPokeTestCommand;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -51,6 +52,7 @@ public class LarielsAdditionalCommands {
 
         // temp fixes
         LarielPokeBattleCommand.register(event.getDispatcher());
+        LarielPokeTestCommand.register(event.getDispatcher());
     }
 
     @SubscribeEvent
