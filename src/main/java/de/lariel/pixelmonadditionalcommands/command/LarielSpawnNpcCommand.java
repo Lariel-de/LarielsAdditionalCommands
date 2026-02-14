@@ -2,16 +2,17 @@ package de.lariel.pixelmonadditionalcommands.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.pixelmonmod.pixelmon.init.registry.PixelmonRegistry;
 import de.lariel.pixelmonadditionalcommands.utility.LarielErrorLog;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
-import net.minecraft.network.chat.Component;
+import net.minecraft.commands.arguments.ResourceKeyArgument;
+import net.minecraft.commands.arguments.coordinates.Vec3Argument;
+import net.minecraft.commands.arguments.coordinates.WorldCoordinates;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import java.util.Map;
@@ -21,50 +22,30 @@ import java.util.concurrent.ThreadLocalRandom;
 public class LarielSpawnNpcCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(
-                LiteralArgumentBuilder.<CommandSourceStack>literal("larielspawnnpc")
-                        .executes(context -> {
-                            context.getSource().sendFailure(Component.literal("Invalid command"));
-                            return 0;
-                        })
-                        .then(Commands.argument("presetSearchString", StringArgumentType.string())
+        dispatcher.register(Commands.literal("larielspawnnpc")
+                .requires(src -> src.hasPermission(2))
+                .then(Commands.argument("presetSearchString", ResourceKeyArgument.key(PixelmonRegistry.NPC_PRESET_REGISTRY))
+                        .executes(ctx -> execute(ctx, false))
+                        .then(Commands.argument("mode", StringArgumentType.word())
                                 .suggests((ctx, builder) -> {
-                                    var level = ctx.getSource().getLevel();
-                                    var registry = level.registryAccess().registryOrThrow(PixelmonRegistry.NPC_PRESET_REGISTRY);
-                                    registry.keySet().forEach(id -> builder.suggest("\"" + id.toString() + "\""));
+                                    builder.suggest("First");
+                                    builder.suggest("Last");
+                                    builder.suggest("Random");
                                     return builder.buildFuture();
                                 })
-                                // Optional parameter: search mode
-                                .then(Commands.argument("mode", StringArgumentType.string())
-                                        .suggests((ctx, builder) -> {
-                                            builder.suggest("first");
-                                            builder.suggest("last");
-                                            builder.suggest("random");
-                                            return builder.buildFuture();
-                                        })
-                                        .executes(ctx -> execute(ctx, true))
-                                )
-                                // Fallback without search mode defined -> it takes First
-                                .executes(ctx -> execute(ctx, false))
-                        )
-        );
+                                .executes(ctx -> execute(ctx, true))
+                                .then(Commands.argument("pos", Vec3Argument.vec3())
+                                        .executes(ctx -> execute(ctx, true))))));
     }
 
     private static int execute(CommandContext<CommandSourceStack> context, boolean hasMode) {
-        var presetSearchString = StringArgumentType.getString(context, "presetSearchString");
+        var presetSearchString = context.getArgument("presetSearchString", ResourceKey.class).location().getPath();
+        var pos = GetPosition(context);
 
         // Get search mode
         var mode = hasMode
                 ? StringArgumentType.getString(context, "mode").toLowerCase()
                 : "first";
-
-        // Get Executor and Level
-        var executor = context.getSource().getEntity();
-        var level = context.getSource().getLevel();
-
-        if (executor == null) {
-            return LarielErrorLog.LogDebug("This command cannot be executed from console.", context);
-        }
 
         // Load registry
         var registry = Optional.ofNullable(ServerLifecycleHooks.getCurrentServer())
@@ -79,7 +60,7 @@ public class LarielSpawnNpcCommand {
         // Get all presets that are matching the filter
         var matches = registry.entrySet().stream()
                 .filter(e -> e.getKey().location().toString().contains(presetSearchString))
-                .map(Map.Entry::getValue)
+                .map(Map.Entry::getKey)
                 .toList();
 
         // Print out error message if no preset was found.
@@ -95,30 +76,34 @@ public class LarielSpawnNpcCommand {
             default -> matches.getFirst(); // "first"
         };
 
-        // Spawn NPC
-        var npc = preset.createBuilder()
-                .position(executor.position())
-                .track()
-                .buildAndSpawn(level);
+        var source = context.getSource();
 
-        // Add tag that it could be easily detected.
-        npc.addTag("LarielsAdditonalCommandsNpc");
+        // Build command
+        var cmd = "npc spawn " + preset.location() + " " + pos.x + " " + pos.y + " " + pos.z;
 
-        // If player → NPC looks at player
-        if (executor instanceof ServerPlayer player) {
-            npc.moveNPC(() -> npc.lookAt(EntityAnchorArgument.Anchor.EYES, executor.position()));
-            npc.setCurrentlyEditing(player);
-        }
-
-        var npcName = Optional.ofNullable(npc.getCustomName())
-                .map(Component::getString)
-                .orElse("No Custom Name found");
-
-        context.getSource().sendSuccess(
-                () -> Component.literal("Spawned: " + npcName + " (" + mode + ")"),
-                true
-        );
+        // Spawn NPC with build in NPCCommand
+        source.getServer().getCommands().performPrefixedCommand(source, cmd);
 
         return 1;
+    }
+
+    private static Vec3 GetPosition(CommandContext<CommandSourceStack> context) {
+        var hasPos = context.getNodes().stream() .anyMatch(n -> n.getNode().getName().equals("pos"));
+
+        if (hasPos)
+        {
+            var pos = context.getArgument("pos", WorldCoordinates.class);
+            return pos.getPosition(context.getSource());
+        }
+
+        var executor = context.getSource().getEntity();
+
+        if (executor == null) {
+            LarielErrorLog.LogDebug("This command cannot be executed from console.", context);
+
+            return new Vec3(0, 0, 0);
+        }
+
+        return new Vec3(executor.getX(), executor.getY(), executor.getZ());
     }
 }

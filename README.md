@@ -48,16 +48,18 @@ Current features:
 
 ### /larielspawnnpc
 Spawns an NPC based on your Pixelmon NPC presets.  
-The command supports autocomplete for easier preset discovery.
+The command supports autocomplete for easier preset discovery.  
+*Uses internally the official ```/npc <preset>``` command, just extends it's logic.*
 
 #### **Syntax**
 ```/larielspawnnpc <filter> [mode]```
 #### **Arguments**
 
-| Argument | Required | Description |
-|---------|----------|-------------|
+| Argument | Required | Description                                                                   |
+|---------|----------|-------------------------------------------------------------------------------|
 | `<filter>` | Yes | Case‑insensitive substring used to search preset paths (folders + filenames). |
-| `[mode]` | No | Determines which preset is selected if multiple matches exist. |
+| `[mode]` | No | Determines which preset is selected if multiple matches exist.                |
+| `[mode]` | No | Position where the NPC should be spawned.                                     |
 
 #### **Search Modes**
 
