@@ -1,6 +1,7 @@
 package de.lariel.pixelmonadditionalcommands;
 
 import de.lariel.pixelmonadditionalcommands.command.*;
+import de.lariel.pixelmonadditionalcommands.command.tempfixes.LarielPokeBattleCommand;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -46,7 +47,10 @@ public class LarielsAdditionalCommands {
     public static void onCommandRegister(RegisterCommandsEvent event) {
         LarielSpawnNpcCommand.register(event.getDispatcher());
         event.getDispatcher().register(LarielListPresetsCommand.registerListPresets());
-        LarielSetTrainerToLevel.register(event.getDispatcher());
+        LarielSetTrainerToLevelCommand.register(event.getDispatcher());
+
+        // temp fixes
+        LarielPokeBattleCommand.register(event.getDispatcher());
     }
 
     @SubscribeEvent
