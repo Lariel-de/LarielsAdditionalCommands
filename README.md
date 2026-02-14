@@ -139,6 +139,37 @@ Sets the nearest NPC's level to match the highest level in your party.
 
 ---
 
+### /larielpokebattle
+Starts a Pokémon battle between two trainers or entities.   
+This command is normally provided by Pixelmon, but due to issues in the current version it has been 
+temporarily fixed and implemented in this mod (https://pixelmonmod.com/tracker.php?p=2&t=23206). 
+
+#### **Syntax**
+```/larielpokebattle <challanger> <opponent1> [opponent2] [opponent3]```
+
+**Arguments**
+
+| Argument       | Required | Description |
+|----------------|----------|-------------|
+| `<challenger>` | Yes      | The entity that initiates the battle. Can be a player, NPC, or any valid entity selector (`@s`, `@p`, `@e`, UUID, player name). |
+| `<opponent1>`  | Yes      | The target entity that will be challenged. Must be a valid battle‑capable entity (player or NPC trainer). |
+
+**Behavior**
+
+- Forces a battle between the two specified entities.
+- Both sides must have a valid Pokémon team.
+- If either entity is already in a battle, the command will fail with an error message.
+- NPC trainers will use their configured teams and AI behavior.
+- Players will be prompted with the standard Pixelmon battle UI.
+
+**Notes**
+
+- This command is a temporary fix for issues in the original Pixelmon `/pokebattle` implementation.
+- Once Pixelmon resolves the underlying bug, this command will be removed
+- Code for this command was rewritten
+
+---
+
 ## Download
 
 You can find published releases on the right side of this GitHub repository.  
