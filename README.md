@@ -216,7 +216,7 @@ The command returns the total number of matches across all targeted players.
 
 ## Download
 
-You can find published releases on the right side of this GitHub repository.  
+You can find published releases on the right side of this GitHub repository (or click [here](https://github.com/Lariel-de/LarielsAdditionalCommands/releases)).  
 I will occasionally upload the mod to CurseForge and link it here once available.
 
 ---
