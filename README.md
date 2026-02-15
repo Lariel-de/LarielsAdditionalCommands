@@ -13,6 +13,7 @@ Built for **NeoForge 21.1.200** and **Pixelmon 9.3.14+**.
   - [/larielspawnnpc](#larielspawnnpc)
   - [/lariellistpresets](#lariellistpresets)
   - [/larielsettrainertolevel](#larielsettrainertolevel)
+  - [/larielbadgecount](#larielbadgecount)
   - [Temporary Command Fixes](#temporary-command-fixes)
     - [/larielpokebattle](#larielpokebattle)
     - [/larielpoketest](#larielpoketest)
@@ -124,7 +125,7 @@ Lists only presets containing the word `gym`.
 Sets the level of a *Pixelmon* NPC trainer. The command supports entity selectors and level autocompletion.
 
 #### **Syntax**
-```/lariellistpresets [filter]```
+```/larielsettrainertolevel <target> <level/equal>```
 
 **Arguments**
 
@@ -143,6 +144,34 @@ Sets NPC trainer with GUID "085214d4-d952-4b78-afd7-8147436dec57" to level 10.
 **Example 2**  
 ```/larielsetlevel @e[type=pixelmon:npc,limit=1,sort=nearest] equal```  
 Sets the nearest NPC's level to match the highest level in your party.
+
+---
+
+### /larielbadgecount
+The ```/larielbadgecount``` command searches a player's entire inventory and badge case and counts all badges found.
+Duplicate badges are automatically grouped and clearly displayed.
+
+#### **Syntax**
+```/larielbadgecount <player> [unique]```
+
+**Arguments**
+
+| Argument   | Required | Description                                                                |
+|------------|----------|----------------------------------------------------------------------------|
+| `<player>` | Yes      | The player whose badges are to be checked.                                 |
+| `[unique]` | Yes      | Only shows the number of unique badge types.                               |
+
+**Examples**
+
+**Example 1**  
+```/larielbadgecount Lariel```  
+Output: "Lariel has 6 BadgeItem(s): 2x Boulder Badge, 1x Cascade Badge, 3x Thunder Badge".  
+Counts all badges in inventory, armorslots and badgecases.
+
+**Example 2**  
+```/execute store result score @s badgeCount run larielbadgecount @s```  
+Output: "Lariel has 3 unique BadgeItem(s): 2x Boulder Badge, 1x Cascade Badge, 3x Thunder Badge".  
+Counts all unique badges in inventory, armorslots and badgecases and stores it in the players scoreboard "badgeCount".
 
 ---
 
