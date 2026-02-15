@@ -44,6 +44,8 @@ Current features:
   - Autocomplete for preset names
   - Optional search modes (first, last, random)
 - List all available presets with optional filtering
+- Set the level of a NPCs complete team - no more unbalanced trainers that have way too high or way too low Pokémon
+- Several fixes for official *Pixelmon* commands
 
 ---
 
@@ -186,7 +188,7 @@ temporarily fixed and implemented in this mod (https://pixelmonmod.com/tracker.p
 The /poketest command allows server operators to scan one or more players’ parties and check whether their Pokémon match a given *Pixelmon* Specification.
 It supports checking either a specific party slot or the entire party.   
 This command is normally provided by *Pixelmon*, but due to issues in the current version it has been
-temporarily fixed and implemented in this mod.
+temporarily fixed and implemented in this mod (https://pixelmonmod.com/tracker.php?p=2&t=23262).
 
 #### **Syntax**
 ```/larielpokebattle <player> [slot] <spec>```
