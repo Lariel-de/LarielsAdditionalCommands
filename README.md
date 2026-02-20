@@ -14,6 +14,7 @@ Built for **NeoForge 21.1.200** and **Pixelmon 9.3.14+**.
   - [/lariellistpresets](#lariellistpresets)
   - [/larielsettrainertolevel](#larielsettrainertolevel)
   - [/larielbadgecount](#larielbadgecount)
+  - [/larielharvestradius and /larielharvestarea](#larielharvestradius-and-larielharvestarea)
   - [Temporary Command Fixes](#temporary-command-fixes)
     - [/larielpokebattle](#larielpokebattle)
     - [/larielpoketest](#larielpoketest)
@@ -172,6 +173,42 @@ Counts all badges in inventory, armorslots and badgecases.
 ```/execute store result score @s badgeCount run larielbadgecount @s```  
 Output: "Lariel has 3 unique BadgeItem(s): 2x Boulder Badge, 1x Cascade Badge, 3x Thunder Badge".  
 Counts all unique badges in inventory, armorslots and badgecases and stores it in the players scoreboard "badgeCount".
+
+---
+
+### /larielharvestradius and /larielharvestarea
+The ```/larielharvestradius``` and ```/larielharvestarea``` commands are searching for *Apricorn*- and *Berry-Leaves*
+in a defines area or radius around the player.  
+For every leave that is found, it simulates that the player has harvested the leave. After that it collects all items on
+ground and adds them to players inventory.  
+*Note: This command has to be executed by a player. If you want to use it in a command block see example 3.*
+
+#### **Syntax**
+```/larielharvestradius <radius>```  
+```/larielharvestarea <area>```
+
+**Arguments**
+
+| Argument   | Required | Description                                                              |
+|------------|----------|--------------------------------------------------------------------------|
+| `<radius>` | Yes      | The radius around the player where it should be searched for the leaves. |
+| `<area>`   | Yes      | The area where it should be searched for the leaves.                     |
+
+**Examples**
+
+**Example 1**  
+```/larielharvestradius 65```    
+Collects all harvestable berries and apricorns in an 65 blocks radius.  
+*Note: On y-axis it's just -2 to 5 relative to executors position.*
+
+**Example 2**  
+```/larielharvestarea ~-10 ~-10 ~-10 ~10 ~10 ~10```  
+Collects all harvestable berries and apricorns in the specified area.
+
+**Example 3**  
+```/execute as @p[sort=nearest, limit=1] larielharvestarea ~-10 ~-10 ~-10 ~10 ~10 ~10```  
+This could be used to execute the command in a commandblock to collect all harvestable berries and apricorns 
+in the specified area.
 
 ---
 
