@@ -15,6 +15,7 @@ Built for **NeoForge 21.1.200** and **Pixelmon 9.3.14+**.
   - [/larielsettrainertolevel](#larielsettrainertolevel)
   - [/larielbadgecount](#larielbadgecount)
   - [/larielharvestradius and /larielharvestarea](#larielharvestradius-and-larielharvestarea)
+  - [/larielsortpc](#larielsortpc)
   - [Temporary Command Fixes](#temporary-command-fixes)
     - [/larielpokebattle](#larielpokebattle)
     - [/larielpoketest](#larielpoketest)
@@ -177,38 +178,82 @@ Counts all unique badges in inventory, armorslots and badgecases and stores it i
 ---
 
 ### /larielharvestradius and /larielharvestarea
-The ```/larielharvestradius``` and ```/larielharvestarea``` commands are searching for *Apricorn*- and *Berry-Leaves*
-in a defines area or radius around the player.  
-For every leave that is found, it simulates that the player has harvested the leave. After that it collects all items on
-ground and adds them to players inventory.  
-*Note: This command has to be executed by a player. If you want to use it in a command block see example 3.*
+The ```/larielharvestradius``` and ```/larielharvestarea``` commands search for Apricorn and Berry Leaves  
+within a specified radius or area around the player.
+For every harvestable leaf that is found, the command simulates a player harvest action.
+All resulting drops are collected from the ground and added directly to the player’s inventory.
+
+*Note: These commands must be executed by a player. For command block usage, see Example 3.*
 
 #### **Syntax**
+**Radius based**     
 ```/larielharvestradius <radius>```  
+
+**Area based**    
 ```/larielharvestarea <area>```
 
 **Arguments**
 
-| Argument   | Required | Description                                                              |
-|------------|----------|--------------------------------------------------------------------------|
-| `<radius>` | Yes      | The radius around the player where it should be searched for the leaves. |
-| `<area>`   | Yes      | The area where it should be searched for the leaves.                     |
+| Argument   | Required | Description                                                            |
+|------------|----------|------------------------------------------------------------------------|
+| `<radius>` | Yes      | Radius around the player in which harvestable leaves will be searched. |
+| `<area>`   | Yes      | Cuboid area in which harvestable leaves will be searched.              |
 
 **Examples**
 
 **Example 1**  
 ```/larielharvestradius 65```    
-Collects all harvestable berries and apricorns in an 65 blocks radius.  
-*Note: On y-axis it's just -2 to 5 relative to executors position.*
+Collects all harvestable berries and apricorns within a 65‑block radius.  
+*Note: On the Y‑axis, the search range is fixed to −2 to +5 relative to the player*
 
 **Example 2**  
 ```/larielharvestarea ~-10 ~-10 ~-10 ~10 ~10 ~10```  
-Collects all harvestable berries and apricorns in the specified area.
+Collects all harvestable berries and apricorns inside the specified cuboid area.
 
 **Example 3**  
 ```/execute as @p[sort=nearest, limit=1] larielharvestarea ~-10 ~-10 ~-10 ~10 ~10 ~10```  
-This could be used to execute the command in a commandblock to collect all harvestable berries and apricorns 
-in the specified area.
+Executes the harvest command for the nearest player.  
+*Useful for command blocks or automated harvesting setups.*
+
+---
+
+### /larielsortpc
+The ```/sortpc``` command sorts the Pokémon inside the player’s PC boxes based on a chosen sorting mode.
+It can optionally rename the affected boxes according to the Pokémon generations they contain.
+
+Sorting can be applied to any range of PC boxes, using 1‑based indices for convenience.
+If the optional rename flag is enabled, each box will be renamed to reflect the generations of the Pokémon inside it
+*(e.g. Gen 1, Gen 1–3, or Gen 1 + 3 + 5)*
+
+#### **Syntax**
+```/sortpc <mode> <ascending> <fromBox> <toBox> [rename]```  
+
+**Arguments**
+
+| Argument      | Required | Description                                                                 |
+|---------------|----------|-----------------------------------------------------------------------------|
+| `<mode>`      | Yes      | Sorting mode. Currently supported: `dex`, `shiny`.                          |
+| `<ascending>` | Yes      | `true` for ascending order, `false` for descending order.                   |
+| `<fromBox>`   | Yes      | First PC box to include in the sorting range (1‑based).                     |
+| `<toBox>`     | Yes      | Last PC box to include in the sorting range (1‑based). Must be ≥ `fromBox`. |
+| `[rename]`    | No       | If `true`, renames boxes based on contained Pokémon generations.            |
+
+**Examples**
+
+**Example 1**  
+```/sortpc dex true 1 30```    
+Sorts all Pokémon in boxes 1 to 30 by Pokédex number in ascending order.    
+Box names remain unchanged.
+
+**Example 2**  
+```/sortpc shiny false 5 10 true```  
+Sorts boxes 5 to 10 by shiny status in descending order
+and renames each box based on the generations of the Pokémon inside.
+
+**Example 3**  
+```/execute as @p[sort=nearest, limit=1] run sortpc dex true 1 10 true```  
+Executes the sorting command for the nearest player, sorting boxes 1 to 10
+and renaming them accordingly. Useful for command blocks or automated setups.
 
 ---
 

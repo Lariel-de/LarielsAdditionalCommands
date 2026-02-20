@@ -51,6 +51,7 @@ public class LarielsAdditionalCommands {
         LarielSetTrainerToLevelCommand.register(event.getDispatcher());
         LarielBadgeCountCommand.register(event.getDispatcher());
         LarielHarvestBerryCommand.register(event.getDispatcher());
+        LarielSortPcCommand.register(event.getDispatcher());
 
         // temp fixes
         LarielPokeBattleCommand.register(event.getDispatcher());
