@@ -107,11 +107,16 @@ public class LarielSortPcCommand {
             return 0;
         }
 
+        if (pc == null) return -1;
+
         var logic = mode.equalsIgnoreCase("shiny") ? new ShinyPredicate() : new DexNoPredicate();
 
         sortBoxes(pc, logic, ascending, fromBox, toBox);
 
         if (rename) renameBoxesByGeneration(pc, fromBox, toBox);
+
+        // Refresh the complete client-side PC state, including empty slots and box metadata.
+        pc.initialize(player);
 
         ctx.getSource().sendSuccess(
                 () -> Component.literal("Sorted boxes " + fromBox1Based + " to " + toBox1Based),
